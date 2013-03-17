@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>分析工具</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="<%=cilentIP%>:<%=port%>/socket.io/socket.io.js"></script>
+    <script src="/javascripts/jquery-1.9.1-min.js"></script>
+    <script type="text/javascript" src="/javascripts/initDropErea.js"></script>
+    <script type="text/javascript" src="/javascripts/function.js"></script>
+</head>
+<body>
+<div id='app'>
+    <div id="droperea"></div>
+    <div class="resultList">
+        <div class="firstRow"></div>
+        <div class="secondRow"></div>
+    </div>
+    <div class="promptInfo"></div>
+</div>
+<script language="JavaScript">
+    initSocketWithIPAndPort('<%=cilentIP%>','<%=port%>');
+    initDropErea('droperea');
+</script>
+</body>
+</html>
