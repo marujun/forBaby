@@ -8,7 +8,6 @@
 
 //http://jordy.easymorse.com/?p=422
 
-require('../modules/config');
 
 var fs = require('fs');
 var FLog = require('../modules/log').create();
