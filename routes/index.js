@@ -7,6 +7,7 @@ require('../modules/Config');
 var FLog = require('../modules/log').create(),
     fs=require("fs"),
     io=require('../app').io,
+    util = require('util'),
     rmdir=require ('./rmdirSync').rmdirSync,
     parseExcel=require('./excel').parseExcel;
 
@@ -29,14 +30,23 @@ exports.startAnalysis = function(req, res){
 exports.upload=function(req,res){
     var tmp_path = req.files.uploadFile.path; // 获得文件的临时路径
     var target_path = __dirname+'/../upload/' +req.files.uploadFile.name;// 指定文件上传后的目录
-    fs.rename(tmp_path, target_path, function(err) { // 移动文件
-        if (err){ FLog.error("上传文件失败 error :"+err);
-        }else{ FLog.info("上传文件："+target_path+"成功!"); }
-        rmdir(tmp_path,function(){  // 删除临时文件夹文件,
-            FLog.info("删除临时文件 :"+tmp_path +"  成功!");
-        });
+
+    var tempStream = fs.createReadStream(tmp_path);
+    var targetStream = fs.createWriteStream(target_path);
+
+    util.pump(tempStream, targetStream, function() {
+        fs.unlinkSync(tmp_path);
         res.end();
     });
+
+//    fs.rename(tmp_path, target_path, function(err) { // 移动文件
+//        if (err){ FLog.error("上传文件失败 error :"+err);
+//        }else{ FLog.info("上传文件："+target_path+"成功!"); }
+//        rmdir(tmp_path,function(){  // 删除临时文件夹文件,
+//            FLog.info("删除临时文件 :"+tmp_path +"  成功!");
+//        });
+//        res.end();
+//    });
 };
 
 exports.deleteUploadFile=function(req,res){
