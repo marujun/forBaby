@@ -28,7 +28,7 @@ exports.parseExcel= function(filePath,callBack){
             FLog.error('exec stderr : ' + stderr);
         }else{
             var xlsDataArray=stdout.split(/\r?\n/ig);
-            xlsDataArray.splice(0,2);
+            xlsDataArray.splice(0,1);
             for(var i=0;i<xlsDataArray.length;i++){
                 if(xlsDataArray[i]!=''){
                     var rowArray=xlsDataArray[i].split('|ysy|');
