@@ -34,7 +34,8 @@ exports.upload=function(req,res){
     var tempStream = fs.createReadStream(tmp_path);
     var targetStream = fs.createWriteStream(target_path);
 
-    util.pump(tempStream, targetStream, function() {
+    util.pump(tempStream, targetStream, function(err) {
+        if(err){FLog.info("上传文件错误:"+err);}
         fs.unlinkSync(tmp_path);
         res.end();
     });
