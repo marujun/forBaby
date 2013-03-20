@@ -31,7 +31,7 @@ function initSocketWithIPAndPort(ip,port){
 function initResultList(firstArray,secondArray){
     $('.resultList').show().find('div table').remove();
     console.time('渲染计时');
-    var firstTable='<table class="resultList_firstTable" border="1px" bordercolor="#000000" cellspacing="0px" ><tr><td class="firstTd">第一列</td></tr>';
+    var firstTable='<table class="resultList_firstTable" border="1px" bordercolor="#000000" cellspacing="0px" ><tr><td class="firstTd">第一列（包含excel的标题共'+firstArray.length+'行）</td></tr>';
     for(var i=0;i<firstArray.length;i++){
         if(firstArray[i]!=''){
             firstTable+='<tr><td class="firstTd">'+firstArray[i]+'</td></tr>';
@@ -39,7 +39,7 @@ function initResultList(firstArray,secondArray){
     }
     firstTable+='</table>';
     $('.firstRow').append(firstTable);
-    var secondTable='<table class="resultList_secondTable" border="1px" bordercolor="#000000" cellspacing="0px" > <tr><td class="secondTd">第二列</td></tr>';
+    var secondTable='<table class="resultList_secondTable" border="1px" bordercolor="#000000" cellspacing="0px" > <tr><td class="secondTd">第二列（包含excel的标题共'+secondArray.length+'行）</td></tr>';
     for(var j=0;j<secondArray.length;j++){
         if(secondArray[j]!=''){
             secondTable+='<tr><td class="secondTd">'+secondArray[j]+'</td></tr>';
