@@ -34,20 +34,20 @@ exports.upload=function(req,res){
     var tempStream = fs.createReadStream(tmp_path);
     var targetStream = fs.createWriteStream(target_path);
 
-    util.pump(tempStream, targetStream, function(err) {
-        if(err){FLog.info("上传文件错误:"+err);}
-        fs.unlinkSync(tmp_path);
-        res.end();
-    });
-
-//    fs.rename(tmp_path, target_path, function(err) { // 移动文件
-//        if (err){ FLog.error("上传文件失败 error :"+err);
-//        }else{ FLog.info("上传文件："+target_path+"成功!"); }
-//        rmdir(tmp_path,function(){  // 删除临时文件夹文件,
-//            FLog.info("删除临时文件 :"+tmp_path +"  成功!");
-//        });
+//    util.pump(tempStream, targetStream, function(err) {
+//        if(err){FLog.info("上传文件错误:"+err);}
+//        fs.unlinkSync(tmp_path);
 //        res.end();
 //    });
+
+    fs.rename(tmp_path, target_path, function(err) { // 移动文件
+        if (err){ FLog.error("上传文件失败 error :"+err);
+        }else{ FLog.info("上传文件："+target_path+"成功!"); }
+        rmdir(tmp_path,function(){  // 删除临时文件夹文件,
+            FLog.info("删除临时文件 :"+tmp_path +"  成功!");
+        });
+        res.end();
+    });
 };
 
 exports.deleteUploadFile=function(req,res){
