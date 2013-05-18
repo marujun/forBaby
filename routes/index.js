@@ -8,6 +8,7 @@ var FLog = require('../modules/log').create(),
     fs=require("fs"),
     io=require('../app').io,
     util = require('util'),
+    moment = require('moment'),
     rmdir=require ('./rmdirSync').rmdirSync,
     parseExcel=require('./excel').parseExcel;
 
@@ -19,7 +20,7 @@ exports.index = function(req, res){
 };
 
 exports.startAnalysis = function(req, res){
-    var filePath=__dirname+'/../upload/' +req.query.fileName;
+    var filePath=__dirname+'/../upload/' +req.query.fileName.replace(/\s+/g,'_');
     parseExcel(filePath,function(doc){
         FLog.info('parse result: '+ JSON.stringify(doc));
         res.send(doc);
@@ -29,7 +30,10 @@ exports.startAnalysis = function(req, res){
 
 exports.upload=function(req,res){
     var tmp_path = req.files.uploadFile.path; // 获得文件的临时路径
-    var target_path = __dirname+'/../upload/' +req.files.uploadFile.name;// 指定文件上传后的目录
+//    var dateStr=moment(new Date()).format("___YYYY-MM-DD__HH:mm:ss.SSS");
+    var fileName=req.files.uploadFile.name.replace(/\s+/g,'_');
+//    FLog.info('upload fileName: '+fileName);
+    var target_path = __dirname+'/../upload/' +fileName;// 指定文件上传后的目录
 
     var tempStream = fs.createReadStream(tmp_path);
     var targetStream = fs.createWriteStream(target_path);
@@ -37,7 +41,7 @@ exports.upload=function(req,res){
     util.pump(tempStream, targetStream, function(err) {
         if(err){FLog.info("上传文件错误:"+err);}
         fs.unlinkSync(tmp_path);
-        res.end();
+        res.send({fileName:fileName});
     });
 
 //    fs.rename(tmp_path, target_path, function(err) { // 移动文件

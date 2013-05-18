@@ -44,7 +44,7 @@ function dropEvent(evt){
             xhr.ontimeout = function(event){alert('请求超时！\n 请联系管理员！');};
             xhr.error = function(event){alert('上传过程中发生错误！\n 请重新上传！');};
             xhr.onload = function (event) {
-                if (xhr.status === 200) {console.log('上传成功!\n'+xhr.response);
+                if (xhr.status === 200) {console.log('上传成功!\n'+ xhr.response  );
                 } else {console.log('上传过程中发生错误！\n 请重新上传！');}
             };
             xhr.upload.onprogress = function (evt){  //updateProgress 处理上传进度
